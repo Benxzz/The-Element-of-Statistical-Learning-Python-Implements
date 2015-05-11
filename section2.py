@@ -6,8 +6,8 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-data = np.loadtxt('mixture_simulation_data.txt', skiprows = 1)
-means = np.loadtxt('means.txt')
+data = np.loadtxt('./Data/mixture_simulation_data.txt', skiprows=1)
+means = np.loadtxt('./Data/means.txt')
 X = data[:,:2]
 y = data[:,2]
 
@@ -28,9 +28,11 @@ def linear_regression(X, y):
     plt.scatter(X[:,0], X[:,1], c=y, alpha=.6)
     line = lambda x: ((.5 - clf.intercept_ - clf.coef_[0] * x) 
                       / clf.coef_[1])
-    line_x = [min(X[:,0])-.5, max(X[:,0]+.5)]
+    line_x = [min(X[:,0])-.2, max(X[:,0]+.5)]
     line_y = map(line, line_x)
     plt.plot(line_x, line_y, color='b', alpha=.8, linewidth=3)
+    plt.xlim([-3,5])
+    plt.ylim([-3,5])
     plt.show()
     print '(beta_0) = ' + str(clf.intercept_)
     print '(beta_1, beta_2) = ' + str(clf.coef_)
