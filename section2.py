@@ -99,9 +99,25 @@ def optimal_bayes(X, y, means):
     plt.contour(grid_X, grid_Y, grid_Z, 1, alpha=.8,
                 colors='b', linewidths=3)
     plt.show()
+    n = len(y)
+    predict = []
+    for i in range(n):
+        dist_B = .0
+        dist_R = .0
+        covar  = [[0.2,0],[0,0.2]]
+        for m in means[:10,:]:
+            dist_B += multivariate_normal.pdf(X[i,:], mean=m, 
+                                              cov=covar)
+        for m in means[10:,:]:
+            dist_R += multivariate_normal.pdf(X[i,:], mean=m, 
+                                              cov=covar)
+        if (dist_B > dist_R):
+            predict.append(0)
+        else:
+            predict.append(1)
+    print 'Precision:', 
+    print 100. * sum(predict == y) / len(y)
     
-
-
 # linear_regression(X, y)
 # k_nearest_neighbor(X, y, 15)
 optimal_bayes(X,y,means)
